@@ -60,7 +60,7 @@ const sortedDates = Object.keys(groupedTweets).sort((a, b) => new Date(a) - new 
   const [selectionEnd, setSelectionEnd] = useState(null);
 
   // Spacing
-  let n = 7;
+  let n = 1;
   if (option?.label === "Last Year") n = 30;
   if (option?.label === "Toute la période") n = 50;
   
@@ -248,7 +248,7 @@ const sortedDates = Object.keys(groupedTweets).sort((a, b) => new Date(a) - new 
   }
 
   // Choix de l’espacement de l’axe des X (optionnel si utilisé plus tard dans un graphique)
-  let n = 7; // valeur par défaut
+  let n = 1; // valeur par défaut
   if (option && option.label === "Last Year") {
     n = 30;
   }
