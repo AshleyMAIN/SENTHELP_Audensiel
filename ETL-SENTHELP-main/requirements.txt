@@ -1,0 +1,43 @@
+
+# Astro Runtime includes Airflow and common providers, see:
+# https://www.astronomer.io/docs/astro/runtime-image-architecture#provider-packages
+
+# Machine Learning
+scikit-learn
+
+# Pour nettoyer les caractères unicode
+unidecode
+
+# Chargement de variables d'environnement
+python-decouple
+
+# Web scraping HTML
+beautifulsoup4
+
+# Web automation
+playwright
+
+# Manipulation BSON (MongoDB)
+pymongo
+
+autoscraper
+
+# Pandas pour la manipulation de données
+pandas
+
+unidecode
+
+beautifulsoup4
+
+emoji 
+
+langdetect
+
+nltk
+
+spacy
+
+spacy
+fr-core-news-sm @ https://github.com/explosion/spacy-models/releases/download/fr_core_news_sm-3.7.0/fr_core_news_sm-3.7.0-py3-none-any.whl
+
+

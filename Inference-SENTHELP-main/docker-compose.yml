@@ -1,0 +1,9 @@
+services:
+  inference_service:
+    image: etl-senthelp-inference
+    build:
+      context: .
+      dockerfile: Files/Dockerfile
+    command: python3 ./inference_continue.py
+    volumes:
+      - .:/usr/local/airflow/

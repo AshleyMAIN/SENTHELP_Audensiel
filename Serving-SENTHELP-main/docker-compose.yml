@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./mongodb-with-fastapi
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./mongodb-with-fastapi:/app
+    networks:
+      - mynetwork
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3001:3001"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:

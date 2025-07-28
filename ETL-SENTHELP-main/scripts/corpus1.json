@@ -1,0 +1,21 @@
+{
+    "assurance vie": [
+      "souscription", "bénéficiaire", "rente", "indemnisation", "décès", "protection", "prévoyance", "capital", "complémentaire", "remboursement", "téléconsultation"
+    ],
+    "assurance auto": [
+      "accident", "réparation", "dommages", "réclamation", "vol", "franchise", "réduction", "garantie"
+    ],
+    "assurance santé": [
+      "hospitalisation", "remboursement", "soins", "chirurgie", "complémentaire", "téléconsultation"
+    ],
+    "AXA": [
+      "service client", "réclamation", "assistance dépannage", "remboursement", "prévoyance", "assurance habitation", "assurance vie", "assurance auto", "téléconsultation", "assurance santé", "prime", "santé", "accident", "réductions", "service en ligne", "courtier"
+    ],
+    "Allianz": [
+      "service client", "réclamation", "assistance dépannage", "remboursement", "prévoyance", "assurance habitation", "assurance vie", "assurance auto", "téléconsultation", "assurance santé", "prime", "santé", "accident", "réductions", "service en ligne", "courtier"
+    ],
+    "MAAF": [
+      "service client", "réclamation", "assistance dépannage", "remboursement", "prévoyance", "assurance habitation", "assurance vie", "assurance auto", "téléconsultation", "assurance santé", "prime", "santé", "accident", "réductions", "service en ligne", "courtier"
+    ]
+  }
+  

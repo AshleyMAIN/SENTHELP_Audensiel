@@ -1,0 +1,4 @@
+node_modules/
+fastapi_venv/
+*.pyc
+.cache/
