@@ -40,7 +40,13 @@ services:
     restart: always
     ports:
       - 3000:3000
-
+  inference_continue_service:
+    image: etl-senthelp-inference
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/local/airflow/
 networks:
   airflow_network:
     external: false
