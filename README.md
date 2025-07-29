@@ -127,18 +127,39 @@ Autres fichiers importants :
 
 ## Lancement des composants
 
-### Lancement en une seule fois des trois services : 
+### 1. Lancement en une seule fois des trois services : 
+Un script `start.sh` permet de démarrer automatiquement les trois services (ETL, inférence, dashboard) en parallèle :
+
+```bash
 start.sh
+```
 
-#### Lancer les services une par une dans trois terminaux distincts :
+### 2. Lancement manuel (dans trois terminaux séparés)
 
-1. Lancer le pipeline ETL (Airflow via Astronomer) : \\
-(cd C:/Users/Amayas/Downloads/SENTHELP/ETL-SENTHELP-main && astro dev start)\\
-\\
-2. Lancer l'inférence : \\
-(cd C:/Users/Amayas/Downloads/SENTHELP/Inference-SENTHELP-main && docker compose up)\\
-\\
-3. Lancer le dashboard : \\
-(cd C:/Users/Amayas/Downloads/SENTHELP/Serving-SENTHELP-main && docker compose up) 
+Vous pouvez aussi lancer chaque service **séparément**, dans des terminaux différents :
+
+#### Terminal 1 — Pipeline ETL (Airflow via Astronomer)
+
+```bash
+cd C:/Users/Amayas/Downloads/SENTHELP/ETL-SENTHELP-main
+astro dev start
+```
+
+#### Terminal 2 — Inférence continue
+
+```bash
+cd C:/Users/Amayas/Downloads/SENTHELP/Inference-SENTHELP-main
+docker compose up
+```
+
+#### Terminal 3 — Dashboard (FastAPI + React)
+
+```bash
+cd C:/Users/Amayas/Downloads/SENTHELP/Serving-SENTHELP-main
+docker compose up
+```
+
+---
+
 
 
