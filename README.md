@@ -65,10 +65,140 @@ La pipeline ETL orchestrée par Airflow suit trois étapes principales :
   - Insère les documents dans la base de données MongoDB.
 
 #### Script Python d’extraction (`/scripts`)
-- `Nouvelalgo.py` : script exécuté en sous-processus. Permet de récupérer les tweets selon une période donnée.
-
+- `Nouvelalgo.py` : 
+Ce script est conçu pour être exécuté en sous-processus et permet de récolter des tweets sur une période donnée, selon des mots-clés définis et une méthode de scraping sélectionnée.
 
 ---
+
+### Fonctionnement général
+
+Le script fonctionne à partir d'une série d'arguments fournis en ligne de commande. Il permet :
+
+* De spécifier une période de collecte (date et heure de début et de fin),
+* D'indiquer la méthode de scraping à utiliser,
+* De définir un nombre de tweets à récolter,
+* Et d’opter pour une collecte continue jusqu’à la fin de la période définie.
+
+---
+
+### Arguments en entrée
+
+* **`fichier`** : chemin vers un fichier JSON contenant les mots-clés à utiliser pour les recherches.
+* **`heure`** et **`heurefin`** : heure de début et de fin de la collecte (au format HH\:MM).
+* **`datedebut`** et **`datefin`** : date de début et de fin de la collecte (au format YYYY-MM-DD).
+* **`methode`** : méthode de scraping choisie (`bs4`, `autoscraper`, etc.).
+* **`nombre_tweets`** : nombre de tweets à récupérer (mettre `0` pour une collecte illimitée).
+* **`--finrecolte`** *(optionnel)* : si activé, permet de continuer la collecte jusqu’à la fin de la période spécifiée.
+
+---
+
+### Déroulé du script
+
+1. **Préparation des paramètres** :
+
+   * Conversion des dates en timestamps.
+   * Chargement des mots-clés depuis le fichier JSON.
+
+2. **Lancement de la collecte** :
+
+   * La fonction `main()` est appelée avec les paramètres fournis.
+   * La collecte s'effectue via la fonction `recolte()` de manière asynchrone.
+
+3. **Sauvegardes** :
+
+   * Les tweets collectés sont enregistrés dans un fichier `tweets_raw.json`.
+   * Les métadonnées de la requête (par exemple, `req_id`) sont sauvegardées dans `req.json`.
+
+---
+
+### `recolte()`
+
+* Déclenche la méthode de scraping sélectionnée :
+
+  * Utilise **Playwright** pour automatiser la navigation sur Twitter.
+  * Si la méthode choisie est différente de `bs4`, les scrapers **AutoScraper** sont initialisés.
+  * Utilise la fonction `login()` pour se connecter à Twitter.
+
+* Pour chaque dictionnaire de mots combinés dans le corpus :
+  * Génère la combinaison des mots-clés .
+  * Affiche la page de recherche associé pour chaque combinaison.
+  * Collecte les tweets à l’aide de la méthode choisie (`scraping_bs4()` ou `scraping_autoscraper()`).
+  * Met à jour la liste des tweets récoltes, des identifiantes de tweets et les différents compteurs
+
+* Conditions d'arrêt de la collecte pour chaque mot-clé :
+
+  1. La fin de la période définie est atteinte.
+  2. Le nombre de tweets souhaité a été collecté (si `--finrecolte` n’est pas activé).
+  3. Plus aucun nouveau tweet n’est trouvé malgré le scroll de la page.
+
+* **Défilement (scroll)** : effectué via `perform_scroll()` pour afficher de nouveaux tweets.
+
+* En cas d’échec de la connexion à Twitter :
+
+  * Jusqu’à **15 tentatives de reconnexion** sont effectuées.
+  * Si l’échec persiste, la collecte est interrompue.
+
+* Les sorties :
+current_tweet_amount : nombre total de tweets récoltés jusqu’à présent.
+scroll_count : nombre de scrolls effectués lors de la session.
+termine : booléen indiquant si la collecte est terminée.
+last_timestemp : timestamp du dernier tweet récolté, utile pour la continuité de la collecte.
+lastdate : date du dernier tweet vu, au format lisible.
+liste_tweets : liste des objets Tweet représentant les tweets collectés durant la session
+
+---
+
+### `login()`
+
+Fonction dédiée à l’automatisation de la connexion à Twitter.
+
+* Remplit automatiquement les champs d’identifiant, d’e-mail (si nécessaire) et de mot de passe.
+* Valide le formulaire de connexion.
+* Retourne `True` si la connexion est réussie, sinon `False`.
+
+---
+
+### `scraping_bs4()` et `scraping_autoscraper()`
+
+Fonctions d’extraction des tweets pertinents selon les mots-clés.
+
+* Extraient le texte et l’identifiant du tweet.
+* Vérifient la présence des mots-clés dans le texte à l’aide de la fonction `contient_mots_espaces()`.
+* S’assurent que le tweet n’a pas encore été récolté.
+* Extraient la date et vérifient qu’elle appartient bien à la période de collecte.
+* Si les conditions sont réunies, extraient les autres champs d’intérêt (likes, etc.).
+* Créent un objet `Tweet` à partir des éléments récoltés ( avec la classe  `DonneeCollectee()` ).
+* Rajoute l'objet à la liste des tweets.
+* Retourne :
+  * Les compteurs mis à jour (par mot-clé),
+  * La liste des tweets récoltés,
+  * La liste des identifiants des tweets associés,
+  * Le dernier timestamp et la dernière date vue, pour permettre la reprise de la collecte ultérieurement.
+
+---
+
+### `perform_scroll()`
+
+Fonction de défilement de la page pour charger de nouveaux tweets.
+
+* Détecte et clique sur un éventuel bouton **"Retry"** pour relancer le chargement.
+* Compare les nouveaux éléments chargés avec les tweets déjà récoltés.
+* Retourne :
+
+  * `True` si de nouveaux tweets ont été chargés,
+  * `False` sinon, ce qui peut signaler une condition d’arrêt de la collecte.
+
+---
+
+* Une fois la collecte terminée, le script retourne un booléen `finderecolte`qui signale si la récolte s'est bien effectuée.
+
+---
+
+### Fichiers générés
+
+* `tweets_raw.json` : contient les tweets bruts collectés.
+* `req.json` : contient les métadonnées associées à la requête.
+
 
 ## Étape 2 : Inférence Continue
 
