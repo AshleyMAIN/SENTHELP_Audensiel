@@ -141,21 +141,21 @@ Vous pouvez aussi lancer chaque service **séparément**, dans des terminaux dif
 #### Terminal 1 — Pipeline ETL (Airflow via Astronomer)
 
 ```bash
-cd C:/Users/Amayas/Downloads/SENTHELP/ETL-SENTHELP-main
+cd /SENTHELP/ETL-SENTHELP-main
 astro dev start
 ```
 
 #### Terminal 2 — Inférence continue
 
 ```bash
-cd C:/Users/Amayas/Downloads/SENTHELP/Inference-SENTHELP-main
+cd /SENTHELP/Inference-SENTHELP-main
 docker compose up
 ```
 
 #### Terminal 3 — Dashboard (FastAPI + React)
 
 ```bash
-cd C:/Users/Amayas/Downloads/SENTHELP/Serving-SENTHELP-main
+cd /SENTHELP/Serving-SENTHELP-main
 docker compose up
 ```
 
