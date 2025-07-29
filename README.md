@@ -127,18 +127,18 @@ Autres fichiers importants :
 
 ## Lancement des composants
 
-# Lancement en une seule fois des trois services : 
+### Lancement en une seule fois des trois services : 
 start.sh
 
-# Lancer les services une par une dans trois terminaux distincts :
+#### Lancer les services une par une dans trois terminaux distincts :
 
-1. Lancer le pipeline ETL (Airflow via Astronomer) :
-(cd C:/Users/Amayas/Downloads/SENTHELP/ETL-SENTHELP-main && astro dev start)
-
-2. Lancer l'inférence : 
-(cd C:/Users/Amayas/Downloads/SENTHELP/Inference-SENTHELP-main && docker compose up) 
-
-3. Lancer le dashborad : 
+1. Lancer le pipeline ETL (Airflow via Astronomer) : \\
+(cd C:/Users/Amayas/Downloads/SENTHELP/ETL-SENTHELP-main && astro dev start)\\
+\\
+2. Lancer l'inférence : \\
+(cd C:/Users/Amayas/Downloads/SENTHELP/Inference-SENTHELP-main && docker compose up)\\
+\\
+3. Lancer le dashboard : \\
 (cd C:/Users/Amayas/Downloads/SENTHELP/Serving-SENTHELP-main && docker compose up) 
 
 
