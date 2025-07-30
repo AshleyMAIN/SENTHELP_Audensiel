@@ -1,3 +1,5 @@
+
+Lancer astro 
 une fois lancement astro ne pas oublier de : 
 
 docker network connect etl-senthelp_e5e9dc_airflow_network etl-senthelp_e5e9dc-webserver-1
@@ -5,3 +7,4 @@ docker network connect etl-senthelp_e5e9dc_airflow_network etl-senthelp_e5e9dc-s
 docker network connect etl-senthelp_e5e9dc_airflow_network etl-senthelp_e5e9dc-triggerer-1
 
 puis astro dev restart
+
