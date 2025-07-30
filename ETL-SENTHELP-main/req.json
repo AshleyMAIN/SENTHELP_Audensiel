@@ -1,5 +1,5 @@
 {
-    "req_id": "202507070949",
+    "req_id": "202507301129",
     "corpus": {
         "assurance chômage": [
             "indemnisation",
@@ -293,8 +293,8 @@
             "indemnisation refusée"
         ]
     },
-    "timestamp_debut": 1751617800.0,
-    "timestamp_fin": 1751531400.0,
+    "timestamp_debut": 1753864200.0,
+    "timestamp_fin": 1753777800.0,
     "nb_tweets": 0,
     "nb_scrolls": 0,
     "fin_recolte": false,

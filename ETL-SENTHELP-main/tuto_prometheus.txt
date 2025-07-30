@@ -1,7 +1,7 @@
 une fois lancement astro ne pas oublier de : 
 
-docker network connect etl-senthelp_d269d4_airflow_network etl-senthelp_d269d4-webserver-1
-docker network connect etl-senthelp_d269d4_airflow_network etl-senthelp_d269d4-scheduler-1
-docker network connect etl-senthelp_d269d4_airflow_network etl-senthelp_d269d4-triggerer-1
+docker network connect etl-senthelp_e5e9dc_airflow_network etl-senthelp_e5e9dc-webserver-1
+docker network connect etl-senthelp_e5e9dc_airflow_network etl-senthelp_e5e9dc-scheduler-1
+docker network connect etl-senthelp_e5e9dc_airflow_network etl-senthelp_e5e9dc-triggerer-1
 
 puis astro dev restart

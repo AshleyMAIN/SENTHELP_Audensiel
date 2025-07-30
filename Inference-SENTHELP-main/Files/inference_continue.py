@@ -14,6 +14,15 @@ import tensorflow as tf
 from tensorflow.keras.models import load_model
 from model import sentiment_analysis, initialize_model  # Fonctions personnalisées pour analyse de sentiment
 
+
+# Vérifie la disponibilité du GPU
+gpus = tf.config.list_physical_devices('GPU')
+if not gpus:
+    print("⚠️ Aucun GPU détecté, utilisation du CPU.")
+    os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+else:
+    print(f"✅ GPU détecté : {[gpu.name for gpu in gpus]}")
+    
 # Connexion à la base MongoDB via URI (MongoDB Atlas dans ce cas)
 client = pymongo.MongoClient(
     "mongodb+srv://audensielrd:lNH4fO4YPqDjGJvd@recolte.2nowcyu.mongodb.net/"
@@ -39,24 +48,25 @@ def mongo_stream_method():
         # Utilisation d'un change stream MongoDB pour écouter les modifications en temps réel
         with tweet_collection.watch() as stream:
             for change in stream:
-                tweet = change['fullDocument']  # Récupère le document complet modifié ou inséré
+                if change is not None and change.get('operationType') in ['insert']:
+                    tweet = change['fullDocument']  # Récupère le document complet modifié ou inséré
 
-                # Vérifie si le tweet n'a pas encore d'émotion attribuée
-                if tweet.get('emotion') == "":
-                    # Effectue l'analyse de sentiment sur le texte du tweet
-                    cleaned, emotion = sentiment_analysis(tweet.get('text_tweet', ''), model)
+                    # Vérifie si le tweet n'a pas encore d'émotion attribuée
+                    if tweet.get('emotion') == "":
+                        # Effectue l'analyse de sentiment sur le texte du tweet
+                        cleaned, emotion = sentiment_analysis(tweet.get('text_tweet', ''), model)
 
-                    # Met à jour le document avec le texte nettoyé et l'émotion détectée
-                    tweet_collection.update_one(
-                        {"_id": tweet["_id"]},  # Filtre par identifiant unique du document
-                        {"$set": {
-                            "cleaned_text_tweet": cleaned,
-                            "emotion": emotion
-                        }}
-                    )
+                        # Met à jour le document avec le texte nettoyé et l'émotion détectée
+                        tweet_collection.update_one(
+                            {"_id": tweet["_id"]},  # Filtre par identifiant unique du document
+                            {"$set": {
+                                "cleaned_text_tweet": cleaned,
+                                "emotion": emotion
+                            }}
+                        )
 
-                    # Affiche dans la console l'ID du tweet mis à jour
-                    pprint.pprint(f"Tweet mis à jour : {tweet['_id']}")
+                        # Affiche dans la console l'ID du tweet mis à jour
+                        pprint.pprint(f"Tweet mis à jour : {tweet['_id']}")
 
     except Exception as e:
         print(f"Erreur dans le stream MongoDB : {e}")

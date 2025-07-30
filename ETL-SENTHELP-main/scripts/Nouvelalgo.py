@@ -103,7 +103,7 @@ async def confirmation_mail(page) :
     Si l’input email est visible, retourne True.
     """
     try : 
-        if await page.locator('input[data-testid="ocfEnterTextTextInput"]').is_visible(timeout=5000) :
+        if await page.locator('input[data-testid="ocfEnterTextTextInput"]').is_visible():  # 5 
             return True
         else : 
             return False
@@ -143,7 +143,7 @@ async def login(page):
         sleep()
 
         # Vérifie si l’utilisateur est connecté sur la page d’accueil
-        is_connected = await page.locator('[data-testid="SideNav_AccountSwitcher_Button"]').is_visible(timeout=5000)
+        is_connected = await page.locator('[data-testid="SideNav_AccountSwitcher_Button"]').is_visible()
         return is_connected
 
     except Exception as e:

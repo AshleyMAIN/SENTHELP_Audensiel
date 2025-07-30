@@ -1,9 +1,9 @@
 services:
-  statsd-exporter_service:
+  statsd-exporter:
     image: prom/statsd-exporter:v0.21.0
-    container_name: statsd-exporter_service
+    container_name: statsd-exporter
     volumes:
-      - C:/Users/Amayas/Downloads/ETL-SENTHELP-main/configs/statsd.yaml:/home/statsd-mapping-configs.yaml
+      - C:/Users/Amayas/Downloads/SENTHELP/ETL-SENTHELP-main/configs/statsd.yaml:/home/statsd-mapping-configs.yaml
     entrypoint: ["/bin/sh", "-c"]
     command: ["statsd_exporter --log.level=debug --statsd.mapping-config=/home/statsd-mapping-configs.yaml"]
     ports:
@@ -13,11 +13,11 @@ services:
     networks:
       - airflow_network
       
-  prometheus_service:
+  prometheus:
     image: prom/prometheus:v2.26.0
-    container_name: prometheus_service
+    container_name: prometheus
     volumes:
-      - C:/Users/Amayas/Downloads/ETL-SENTHELP-main/configs/prometheus.yaml:/etc/prometheus/prometheus.yaml
+      - C:/Users/Amayas/Downloads/SENTHELP/ETL-SENTHELP-main/configs/prometheus.yaml:/etc/prometheus/prometheus.yaml
       - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yaml'
@@ -28,9 +28,9 @@ services:
       - 9092:9090
     restart: always
 
-  grafana_service:
+  grafana :
     image: grafana/grafana:6.7.2
-    container_name: grafana_service
+    container_name: grafana
     volumes:
       - grafana_data:/var/lib/grafana
     environment:
@@ -40,13 +40,14 @@ services:
     restart: always
     ports:
       - 3000:3000
-  inference_continue_service:
-    image: etl-senthelp-inference
+  installation_service:
+    image: etl-senthelp-installation
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
       - .:/usr/local/airflow/
+
 networks:
   airflow_network:
     external: false

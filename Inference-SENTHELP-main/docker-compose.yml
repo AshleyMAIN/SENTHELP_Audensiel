@@ -4,6 +4,6 @@ services:
     build:
       context: .
       dockerfile: Files/Dockerfile
-    command: python3 ./inference_continue.py
+    command: python ./inference_continue.py
     volumes:
       - .:/usr/local/airflow/
