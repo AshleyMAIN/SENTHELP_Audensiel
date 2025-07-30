@@ -2,23 +2,22 @@
 
 # Étape 1 : Lancer l'inférence
 echo "Lancement de l'inférence..."
-cd "C:/Users/Amayas/Downloads/SENTHELP/Inference-SENTHELP-main" || exit 1
-docker compose up -d  # -d pour détacher et passer à l'étape suivante
+cd "C:/Users/abidr/OneDrive/Bureau/Audensiel/Stage Ashley SENT HELP 2025/Code source/SENTHELP_Audensiel/Inference-SENTHELP-main" || exit 1
+docker compose up -d   # -d pour détacher et passer à l'étape suivante (ajouter --built si première fois) 
 
 # Étape 2 : Lancer le serving
 echo "Lancement du serving..."
-cd "C:/Users/Amayas/Downloads/SENTHELP/Serving-SENTHELP-main" || exit 1
-docker compose up -d
+cd "C:/Users/abidr/OneDrive/Bureau/Audensiel/Stage Ashley SENT HELP 2025/Code source/SENTHELP_Audensiel/Serving-SENTHELP-main" || exit 1
+docker compose up -d #  (ajouter --built si première fois) 
 
 # Étape 3 : Lancer Astro + configuration réseau
 echo "Démarrage d'Astro..."
-cd "C:/Users/Amayas/Downloads/SENTHELP/ETL-SENTHELP-main" || exit 1
+cd "C:/Users/abidr/OneDrive/Bureau/Audensiel/Stage Ashley SENT HELP 2025/Code source/SENTHELP_Audensiel/ETL-SENTHELP-main" || exit 1
+#docker compose -f 'docker-compose.override.yml' up -d --build 'installation_service' #si première fois
 astro dev start  # démarré en fond car il bloque sinon
 
 # Attendre que tous les conteneurs Astro soient "healthy"
 echo "Attente du démarrage complet des services Astro..."
-
-PROJECT_NAME=$(basename "$PWD" | tr '[:upper:]' '[:lower:]' | tr -c 'a-z0-9' '-')
 
 # Connexion des conteneurs Astro au bon réseau
 echo "Recherche du réseau Airflow..."
@@ -43,3 +42,4 @@ done
 # Redémarrage final d'Astro pour s'assurer de la prise en compte du réseau
 echo "Redémarrage des services Astro..."
 astro dev restart
+

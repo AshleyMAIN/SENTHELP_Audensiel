@@ -104,8 +104,8 @@ def initialize_data(**kwargs):
     cmd = [
         "python", "-m", SCRIPT_MODULE,      # Lancement du module Python à exécuter
         CORPUS_PATH,                        # Chemin vers le corpus
-        "10:30", today.strftime("%Y-%m-%d"),    # Heure et date de fin d’extraction
-        "10:30", day_ago.strftime("%Y-%m-%d"),  # Heure et date de début d’extraction
+        "10:30", today,    # Heure et date de fin d’extraction
+        "10:30", day_ago,  # Heure et date de début d’extraction
         "bs4", "0", "--finrecolte"          # Paramètres supplémentaires : méthode bs4, index, etc.
     ]
 
@@ -403,9 +403,9 @@ with DAG(
     dag_id="twitter_etl_init_dag",               # Identifiant unique du DAG
     default_args=default_args,                     # Arguments par défaut (retries, owner, etc.)
     start_date=datetime(2025, 5, 26, 8, 0),       # Date et heure de démarrage du DAG
-    schedule_interval="30 10 * * *",               # Planification : tous les jours à 10h30
+    schedule_interval=None,               # Planification : tous les jours à 10h30
     catchup=False,                                 # Pas d’exécution rétroactive des dates manquées
-    tags=["daily"],                                # Tag pour catégoriser ce DAG dans l’interface Airflow
+    tags=["manuel"]                               # Tag pour catégoriser ce DAG dans l’interface Airflow
 ) as daily_dag:
 
     # Tâche d’extraction des données Twitter

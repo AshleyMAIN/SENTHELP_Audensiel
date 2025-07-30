@@ -3,7 +3,7 @@ services:
     image: prom/statsd-exporter:v0.21.0
     container_name: statsd-exporter
     volumes:
-      - C:/Users/Amayas/Downloads/SENTHELP/ETL-SENTHELP-main/configs/statsd.yaml:/home/statsd-mapping-configs.yaml
+      - C:/Users/abidr/OneDrive/Bureau/Audensiel/Stage Ashley SENT HELP 2025/Code source/SENTHELP_Audensiel/ETL-SENTHELP-main/configs/statsd.yaml:/home/statsd-mapping-configs.yaml
     entrypoint: ["/bin/sh", "-c"]
     command: ["statsd_exporter --log.level=debug --statsd.mapping-config=/home/statsd-mapping-configs.yaml"]
     ports:
@@ -17,7 +17,7 @@ services:
     image: prom/prometheus:v2.26.0
     container_name: prometheus
     volumes:
-      - C:/Users/Amayas/Downloads/SENTHELP/ETL-SENTHELP-main/configs/prometheus.yaml:/etc/prometheus/prometheus.yaml
+      - C:/Users/abidr/OneDrive/Bureau/Audensiel/Stage Ashley SENT HELP 2025/Code source/SENTHELP_Audensiel/ETL-SENTHELP-main/configs/prometheus.yaml:/etc/prometheus/prometheus.yaml
       - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yaml'
