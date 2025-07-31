@@ -261,7 +261,7 @@ Autres fichiers importants :
 Un script `start.sh` permet de démarrer automatiquement les trois services (ETL, inférence, dashboard) en parallèle :
 
 ```bash
-start.sh
+./start.sh
 ```
 Ne pas oublier de mettre à jour les chemins dans les fichiers : "start.sh" et "docker-compose.override.yml" 
 ### 2. Lancement manuel (dans trois terminaux séparés)

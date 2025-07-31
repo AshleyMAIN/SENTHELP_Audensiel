@@ -61,11 +61,18 @@ const sortedDates = Object.keys(groupedTweets).sort((a, b) => new Date(a) - new 
 
   // Spacing
   let n = 1;
-  if (option?.label === "Last Year") n = 30;
-  if (option?.label === "Toute la période") n = 50;
-  
   let filteredData = tab_pourcentage_sentiment;
-  if ((option?.label === "Last Year" || option?.label === "Toute la période") ) {
+
+  if (option?.label === "Last 3 Months") n = 7;
+  if ((option?.label === "Last 6 Months")  && filteredData.length >= 60) n = 15;
+  if (option?.label === "Last 6 Months") n = 14;
+  if ((option?.label === "Last 6 Months")  && filteredData.length >= 60) n = 30;
+  if ((option?.label === "Last Year")) n = 14;
+  if ((option?.label === "Toute la période")) n = 14;
+  if ((option?.label === "Last Year") && filteredData.length >= 60) n = 30;
+  if ((option?.label === "Toute la période")  && filteredData.length >= 60) n = 50;
+
+  if ((option?.label === "Last 6 Months" || option?.label === "Last Year" || option?.label === "Toute la période") && filteredData.length >= 60 ) {
     filteredData = filteredData.filter((_, index) => index % n === 0);
   }
   
@@ -248,16 +255,21 @@ const sortedDates = Object.keys(groupedTweets).sort((a, b) => new Date(a) - new 
   }
 
   // Choix de l’espacement de l’axe des X (optionnel si utilisé plus tard dans un graphique)
-  let n = 1; // valeur par défaut
-  if (option && option.label === "Last Year") {
-    n = 30;
-  }
-  if (option && option.label === "Toute la période") {
-    n = 90;
-  }
-  
+  // Spacing
+  let n = 1;
   let filteredData = timelineData;
-  if ((option && (option.label === "Toute la période" || option.label === "Last Year")) ) {
+
+  if (option?.label === "Last 3 Months") n = 7;
+  if ((option?.label === "Last 6 Months")  && filteredData.length >= 60) n = 15;
+  if (option?.label === "Last 6 Months") n = 14;
+  if ((option?.label === "Last 6 Months")  && filteredData.length >= 60) n = 30;
+  if ((option?.label === "Last Year")) n = 14;
+  if ((option?.label === "Toute la période")) n = 14;
+  if ((option?.label === "Last Year") && filteredData.length >= 60) n = 30;
+  if ((option?.label === "Toute la période")  && filteredData.length >= 60) n = 50;
+
+  
+  if ((option?.label === "Last 6 Months" || option?.label === "Last Year" || option?.label === "Toute la période") && filteredData.length >= 60 ) {
   filteredData = timelineData.filter((_, index) => index % n === 0);
   filteredData = filteredData.sort((a, b) => a.date.localeCompare(b.date));
   }

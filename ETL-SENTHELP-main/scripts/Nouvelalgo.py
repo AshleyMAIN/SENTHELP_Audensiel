@@ -103,7 +103,7 @@ async def confirmation_mail(page) :
     Si l’input email est visible, retourne True.
     """
     try : 
-        if await page.locator('input[data-testid="ocfEnterTextTextInput"]').is_visible():  # 5 
+        if await page.wait_for_selector('input[data-testid="ocfEnterTextTextInput"]', timeout=5000) :
             return True
         else : 
             return False

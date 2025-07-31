@@ -3,12 +3,12 @@
 # Étape 1 : Lancer l'inférence
 echo "Lancement de l'inférence..."
 cd "C:/Users/abidr/OneDrive/Bureau/Audensiel/Stage Ashley SENT HELP 2025/Code source/SENTHELP_Audensiel/Inference-SENTHELP-main" || exit 1
-docker compose up -d   # -d pour détacher et passer à l'étape suivante (ajouter --built si première fois) 
+docker compose up -d  # -d pour détacher et passer à l'étape suivante (ajouter --build si première fois ou modification de l'image) 
 
 # Étape 2 : Lancer le serving
 echo "Lancement du serving..."
 cd "C:/Users/abidr/OneDrive/Bureau/Audensiel/Stage Ashley SENT HELP 2025/Code source/SENTHELP_Audensiel/Serving-SENTHELP-main" || exit 1
-docker compose up -d #  (ajouter --built si première fois) 
+docker compose up -d --build #  (ajouter --build si première fois) 
 
 # Étape 3 : Lancer Astro + configuration réseau
 echo "Démarrage d'Astro..."
